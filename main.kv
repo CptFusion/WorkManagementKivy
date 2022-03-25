@@ -1,0 +1,431 @@
+<Button>:
+    background_color: (.5,1,0,.7)
+    font_size: 20
+
+
+<LogInScreen>
+    name: "first"
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'redtoblack.jpg'
+    MDCard:
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'redtoblack.jpg'
+        size_hint: None, None
+        size: 400, 500
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        elevation: 10
+        padding: 25
+        spacing: 25
+    MDLabel:
+        text: "    Welcome"
+        color: 1, 1, 0, 1
+        font_size: 40
+        haling: 'center'
+        size_hint_y: None
+        height: self.texture_size[1]
+        padding_y: 15
+        pos_hint:{'center_x': 0.5, 'center_y': 0.7}
+        size_hint_x:None
+        width:250
+    MDTextFieldRound:
+        id: user
+        hint_text: "Enter username"
+        icon_right: "android"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint:{'center_x': 0.5, 'center_y': 0.6}
+        size_hint_x:None
+        width:250
+    MDTextFieldRound:
+        id: passw
+        hint_text: "Enter Password"
+        icon_right: "android"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint:{'center_x': 0.5, 'center_y': 0.5}
+        size_hint_x:None
+        width:250
+        password: True
+    MDRoundFlatButton:
+        text: "Log In"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+        on_press:
+            app.root.current = "start" if passw.text == "" else "loginscreen"
+            app.root.current = "start" if user.text == "" else "loginscreen"
+
+<MainWindow>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'redtoblack.jpg'
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20,20,20,20]
+        spacing: 30
+
+        Button:
+            text: "Customer List"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            size_hint: .2, .2
+            on_press: root.create_new_customer()
+
+        Button:
+            text: "Log out"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            size_hint: .2, .2
+            on_press: root.Logout()
+
+
+<CusDataWid>:
+    data: ''
+    cus_data_id: ''
+    canvas:
+        Color:
+            rgb: .2,.2,.2
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+
+    Button:
+        size_hint_x: 0.2
+        text: 'Price Info'
+
+
+    Label:
+        size_hint_x: 0.6
+        size_hint_y: .85
+        size_font: self.width*0.4
+        text: root.data
+
+    Button:
+        size_hint_x: 0.2
+        text: 'Edit'
+        on_press: root.update_data(root.cus_data_id)
+
+
+
+<NewCusButton>:
+    font_size: self.height*0.5
+    text: 'New Customer'
+    on_press: root.create_new_customerB()
+
+<BackButton>:
+    font_size: self.height*0.5
+    text: 'Back'
+    on_press: app.root.current = "start"
+
+
+<Customer_List_Window>
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'redtoblack.jpg'
+
+
+    ScrollView:
+        size: self.size
+        GridLayout:
+            id: cus_list_cont
+            padding: [20,20,20,20]
+            spacing: 5
+            size_hint_y: None
+            cols:1
+            row_default_height: root.height*0.2
+            height: self.minimum_height
+
+
+<LeftLabel@Label>:
+    text_size: self.size
+
+    halign: 'left'
+
+<TextInput>:
+    write_tab: False
+
+<MessagePopup>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: message
+            size_hint: 1,.8
+            text: ''
+        Button:
+            size_hint: 1,.2
+            text: 'Close'
+            on_press: root.dismiss()
+
+<Create_Cus_Window>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20,20,20,20]
+        spacing: 20
+        canvas:
+            Color:
+                rgb: .3,.3,.9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            size_hint_y: .45
+            orientation: 'horizontal'
+            spacing: 20
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                LeftLabel: ###-------------------ID
+                    text: "ID:"
+                TextInput:
+                    id: ti_id
+                    multiline: False
+                    hint_text: 'ID:'
+                LeftLabel: ###-------------------ID
+                    text: "Name:"
+                TextInput:
+                    id: ti_name
+                    multiline: False
+                    hint_text: 'Name:'
+                LeftLabel: ###-------------------ID
+                    text: "Location:"
+                TextInput:
+                    id: ti_location
+                    multiline: False
+                    hint_text: 'Location:'
+                LeftLabel: ###-------------------ID
+                    text: "Area"
+                TextInput:
+                    id: ti_area
+                    multiline: False
+                    hint_text: 'Area:'
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    text: 'Place Holder'
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 20
+                LeftLabel: ###-------------------ID
+                    text: "Customer Since:"
+                TextInput:
+                    id: ti_cussince
+                    multiline: False
+                    hint_text: 'Date:'
+                LeftLabel: ###-------------------ID
+                    text: "Obtained By:"
+                TextInput:
+                    id: ti_obtained
+                    multiline: False
+                    hint_text: 'Name:'
+                LeftLabel: ###-------------------ID
+                    text: "Royalty To:"
+                TextInput:
+                    id: ti_royalty
+                    multiline: False
+                    hint_text: 'Royalties:'
+        BoxLayout:
+            size_hint_y: .5
+            orientation: 'horizontal'
+            spacing: 20
+
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                LeftLabel: ###-------------------ID
+                    text: "Contact:"
+                TextInput:
+                    id: ti_contact
+                    multiline: False
+                    hint_text: 'Contact:'
+                LeftLabel: ###-------------------ID
+                    text: "Address:"
+                TextInput:
+                    id: ti_address
+                    multiline: False
+                    hint_text: 'Address:'
+                LeftLabel: ###-------------------ID
+                    text: "City:"
+                TextInput:
+                    id: ti_city
+                    multiline: False
+                    hint_text: 'City:'
+                LeftLabel: ###-------------------ID
+                    text: "State:"
+                TextInput:
+                    id: ti_state
+                    multiline: False
+                    hint_text: 'State:'
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                LeftLabel: ###-------------------ID
+                    text: "Phone:"
+                TextInput:
+                    id: ti_phone
+                    multiline: False
+                    hint_text: 'Phone:'
+                LeftLabel: ###-------------------ID
+                    text: "E-Mail:"
+                TextInput:
+                    id: ti_email
+                    multiline: False
+                    hint_text: 'E-Mail:'
+                LeftLabel: ###-------------------ID
+                    text: "Fax:"
+                TextInput:
+                    id: ti_fax
+                    multiline: False
+                    hint_text: 'Fax:'
+        BoxLayout:
+            size_hint_y: .05
+            Button:
+                text: 'Create'
+                on_press: root.insert_cus_data()
+            Button:
+                text: 'Cancel'
+                on_press: root.Cancel_cus_data()
+
+
+
+
+
+
+
+
+
+
+
+<Update_cus_Cell_Block>:
+    cus_data_id: ''
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20,20,20,20]
+        spacing: 20
+        canvas:
+            Color:
+                rgb: .3,.3,.9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            size_hint_y: .45
+            orientation: 'horizontal'
+            spacing: 20
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                LeftLabel: ###-------------------ID
+                    text: "ID "+root.cus_data_id
+                LeftLabel: ###-------------------ID
+                    text: "Name:"
+                TextInput:
+                    id: ti_name
+                    multiline: False
+                    hint_text: 'Name:'
+                LeftLabel: ###-------------------ID
+                    text: "Location:"
+                TextInput:
+                    id: ti_location
+                    multiline: False
+                    hint_text: 'Location:'
+                LeftLabel: ###-------------------ID
+                    text: "Area"
+                TextInput:
+                    id: ti_area
+                    multiline: False
+                    hint_text: 'Area:'
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    text: 'Place Holder'
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 20
+                LeftLabel: ###-------------------ID
+                    text: "Customer Since:"
+                TextInput:
+                    id: ti_cussince
+                    multiline: False
+                    hint_text: 'Date:'
+                LeftLabel: ###-------------------ID
+                    text: "Obtained By:"
+                TextInput:
+                    id: ti_obtained
+                    multiline: False
+                    hint_text: 'Name:'
+                LeftLabel: ###-------------------ID
+                    text: "Royalty To:"
+                TextInput:
+                    id: ti_royalty
+                    multiline: False
+                    hint_text: 'Royalties:'
+        BoxLayout:
+            size_hint_y: .5
+            orientation: 'horizontal'
+            spacing: 20
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                LeftLabel: ###-------------------ID
+                    text: "Contact:"
+                TextInput:
+                    id: ti_contact
+                    multiline: False
+                    hint_text: 'Contact:'
+                LeftLabel: ###-------------------ID
+                    text: "Address:"
+                TextInput:
+                    id: ti_address
+                    multiline: False
+                    hint_text: 'Address:'
+                LeftLabel: ###-------------------ID
+                    text: "City:"
+                TextInput:
+                    id: ti_city
+                    multiline: False
+                    hint_text: 'City:'
+                LeftLabel: ###-------------------ID
+                    text: "State:"
+                TextInput:
+                    id: ti_state
+                    multiline: False
+                    hint_text: 'State:'
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 10
+                LeftLabel: ###-------------------ID
+                    text: "Phone:"
+                TextInput:
+                    id: ti_phone
+                    multiline: False
+                    hint_text: 'Phone:'
+                LeftLabel: ###-------------------ID
+                    text: "E-Mail:"
+                TextInput:
+                    id: ti_email
+                    multiline: False
+                    hint_text: 'E-Mail:'
+                LeftLabel: ###-------------------ID
+                    text: "Fax:"
+                TextInput:
+                    id: ti_fax
+                    multiline: False
+                    hint_text: 'Fax:'
+        BoxLayout:
+            size_hint_y: .05
+            orientation: 'horizontal'
+            Button:
+                text: 'Update'
+                on_press: root.update_cus_data()
+            Button:
+                text: 'Delete'
+                on_press: root.delete_cus()
+            Button:
+                text: 'Cancel'
+                on_press: root.back_to_cusDB()
